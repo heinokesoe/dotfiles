@@ -1,0 +1,76 @@
+## base installation
+cfdisk /dev/sda
+mkfs.ext4 -L ARTIX /dev/sda2
+mkfs.fat -F 32 /dev/sda1
+fatlabel /dev/sda1 EFI
+mount /dev/sda2 /mnt
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+ping artixlinux.org
+basestrap /mnt base base-devel runit elogind-runit
+basestrap /mnt linux-lts linux-firmware
+fstabgen -U /mnt >> /mnt/etc/fstab
+artix-chroot /mnt
+ln -sf /usr/share/zoneinfo/Asia/Yangon /etc/localtime
+hwclock --systohc
+pacman -S nano
+nano /etc/locale.gen
+locale-gen
+nano /etc/locale.conf
+	export LANG="en_US.UTF-8"
+	export LC_COLLATE="C"
+pacman -S grub os-prober efibootmgr
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=artix
+grub-mkconfig -o /boot/grub/grub.cfg
+passwd
+useradd -m USER
+passwd USER
+nano /etc/hostname
+	artix
+nano /etc/hosts
+	127.0.0.1	localhost
+	::1		localhost
+	127.0.1.1	artix.localdomain  artix
+pacman -S connman-runit wpa_supplicant
+ln -s /etc/runit/sv/connmand /etc/runit/runsvdir/default
+exit
+umount -R /mnt
+reboot
+pacman -S xorg xorg-xinit
+
+## Window Manager
+pacman -S libx11 libxft libxinerama freetype2 fontconfig git go
+git clone https://github.com/heinokesoe/dwm
+git clone https://github.com/heinokesoe/dwmblocks
+git clone https://github.com/heinokesoe/dmenu
+git clone https://github.com/heinokesoe/st
+
+## Tap to click
+printf 'Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+	# Enable left mouse button by tapping
+	Option "Tapping" "on"
+EndSection' > /etc/X11/xorg.conf.d/40-libinput.conf
+
+## Apps
+cd /opt
+git clone https://aur.archlinux.org/yay-git.git
+sudo chown -R god:god yay-git
+cd yay-git
+makepkg -si
+pacman -S zsh lxappearance artix-dark-theme noto-fonts-cjk xcompmgr xorg-xprop dosfstools libnotify dunst exfat-utils sxiv xwallpaper ffmpeg neovim mpv man-db noto-fonts-emoji ntfs-3g pulseaudio-alsa pulsemixer pamixer maim unrar unzip xclip xdotool zathura zathura-pdf-mupdf poppler mediainfo atool fzf highlight slock moreutils bmon transmission-runit firefox opera gparted gnome-disk-utility docker-runit
+yay -S lf zsh-fast-syntax-highlighting cmst light jmtpfs authy
+
+## Qemu/kvm
+pacman -S qemu virt-manager libvirt-runit vde2 dnsmasq ebtables openbsd-netcat
+nano /etc/libvirt/libvirtd.conf
+	unix_sock_group = "libvirt"
+	unix_sock_rw_perms = "0770"
+usermod -aG libvirt god
+newgrp libvirt
+ln -s /etc/runit/sv/libvirtd /etc/runit/runsvdir/default
+ln -s /etc/runit/sv/virtlockd /etc/runit/runsvdir/default
+ln -s /etc/runit/sv/virtlogd /etc/runit/runsvdir/default

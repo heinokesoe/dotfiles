@@ -62,7 +62,7 @@ sudo chown -R god:god yay-git
 cd yay-git
 makepkg -si
 pacman -S zsh lxappearance artix-dark-theme noto-fonts-cjk xcompmgr xorg-xprop dosfstools libnotify dunst exfat-utils sxiv xwallpaper ffmpeg neovim mpv man-db noto-fonts-emoji ntfs-3g pulseaudio-alsa pulsemixer pamixer maim unrar unzip xclip xdotool zathura zathura-pdf-mupdf poppler mediainfo atool fzf highlight slock moreutils bmon transmission-runit firefox opera gparted gnome-disk-utility docker-runit
-yay -S vscodium-bin vscodium-bin-features vscodium-bin-marketplace lf zsh-fast-syntax-highlighting cmst light jmtpfs authy
+yay -S aic94xx-firmware wd719x-firmware upd72020x-fw vscodium-bin vscodium-bin-features vscodium-bin-marketplace lf zsh-fast-syntax-highlighting cmst light jmtpfs authy
 
 ## Qemu/kvm
 pacman -S qemu virt-manager libvirt-runit vde2 dnsmasq ebtables openbsd-netcat

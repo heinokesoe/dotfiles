@@ -1,5 +1,12 @@
 let mapleader =";"
 
+if ! filereadable(system('echo -n "$HOME/.config/nvim/autoload/plug.vim"'))
+	echo "Downloading junegunn/vim-plug to manage plugins..."
+	silent !mkdir -p $HOME/.config/nvim/autoload/
+	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.config/nvim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-surround'

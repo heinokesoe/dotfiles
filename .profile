@@ -78,8 +78,8 @@ ex=🎯:\
 "
 export PATH=$PATH:$HOME/go/bin
 export GOBIN=$HOME/go/bin
-export PATH=$PATH:/home/god/.local/bin
-export PATH=$PATH:/home/god/.local/bin/statusbar
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin/statusbar
 export TERMINAL="st"
 export EDITOR="nvim"
 export QT_QPA_PLATFORMTHEME="qt5ct"

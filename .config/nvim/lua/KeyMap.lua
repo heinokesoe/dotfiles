@@ -1,17 +1,27 @@
+local opts = { noremap = true, silent = true }
+local keymap = vim.api.nvim_set_keymap
+
+keymap( "n",   "<C-s>",      ":w<CR>", opts)
+keymap( "n",   "<C-x>",      ":q!<CR>", opts)
+
+-- Better window navigation
+keymap( "n",   "<C-h>",      "<C-w>h", opts)
+keymap( "n",   "<C-l>",      "<C-w>l", opts)
+
 -- Nvim-tree
-vim.api.nvim_set_keymap( "n",   "<leader>n", ":NvimTreeToggle<CR>", {noremap = true})
+keymap( "n",   "<leader>n",  ":NvimTreeToggle<CR>", opts)
 
 -- Telescope
-vim.api.nvim_set_keymap( "n",   "<leader>f", ":Telescope find_files<CR>", {noremap = true})
+keymap( "n",   "<leader>f",  ":Telescope find_files<CR>", opts)
 
 -- Nvim-Lsp-Installer
-vim.api.nvim_set_keymap( "n",   "<leader>l", ":LspInstallInfo<CR>", {noremap = true})
+keymap( "n",   "<leader>l",  ":LspInstallInfo<CR>", opts)
 
 -- LuaSnip
-vim.api.nvim_set_keymap( "i",   "<Tab>",     "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap( "s",   "<Tab>",     "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap( "i",   "<S-Tab>",   "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap( "s",   "<S-Tab>",   "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap( "i",   "<C-E>",     "<Plug>luasnip-next-choice", {})
-vim.api.nvim_set_keymap( "s",   "<C-E>",     "<Plug>luasnip-next-choice", {})
+keymap( "i",   "<Tab>",      "v:lua.tab_complete()", {expr = true})
+keymap( "s",   "<Tab>",      "v:lua.tab_complete()", {expr = true})
+keymap( "i",   "<S-Tab>",    "v:lua.s_tab_complete()", {expr = true})
+keymap( "s",   "<S-Tab>",    "v:lua.s_tab_complete()", {expr = true})
+keymap( "i",   "<C-E>",      "<Plug>luasnip-next-choice", {})
+keymap( "s",   "<C-E>",      "<Plug>luasnip-next-choice", {})
 

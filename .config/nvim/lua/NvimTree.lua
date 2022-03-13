@@ -7,16 +7,16 @@ if not status_ok then
 end
 
 nvimtree.setup {
-    disable_netrw        = false,
+    disable_netrw        = true,
     hijack_netrw         = true,
     open_on_setup        = false,
     ignore_buffer_on_setup = false,
     ignore_ft_on_setup   = {},
-    auto_close           = false,
+    auto_close           = true,
     auto_reload_on_write = true,
     open_on_tab          = false,
     hijack_cursor        = false,
-    update_cwd           = false,
+    update_cwd           = true,
     hijack_unnamed_buffer_when_opening = false,
     hijack_directories   = {
         enable = true,

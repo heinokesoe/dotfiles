@@ -95,34 +95,8 @@ cmp.setup {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
     },
-    -- documentation = true,
-    documentation = {
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
     experimental = {
         ghost_text = false,
         native_menu = false,
     },
-}
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['bashls'].setup {
-    capabilities = capabilities
-}
-require('lspconfig')['clangd'].setup {
-    capabilities = capabilities
-}
-require('lspconfig')['dockerls'].setup {
-    capabilities = capabilities
-}
-require('lspconfig')['emmet_ls'].setup {
-    capabilities = capabilities
-}
-require('lspconfig')['gopls'].setup {
-    capabilities = capabilities
-}
-require('lspconfig')['sumneko_lua'].setup {
-    capabilities = capabilities
 }

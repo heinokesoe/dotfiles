@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ! brctl show | grep "virbr10" &>/dev/null ; then
+    sudo brctl addbr virbr10
+    sudo ifconfig virbr10 up 192.168.123.1
+fi
+
+sudo hostapd ~/.config/hostapd/hostapd.conf

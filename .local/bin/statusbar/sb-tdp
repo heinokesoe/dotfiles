@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Prints power usage in Watts
+case $BLOCK_BUTTON in
+	1) batterytime ;;
+	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+# Loop through all attached batteries and format the info
+for battery in /sys/class/power_supply/BAT?*; do
+	# If non-first battery, print a space separator.
+	[ -n "${status+x}" ] && printf " "
+	# Prints the info
+	case "$(cat ${battery}/status)" in
+		"Charging") status="+" ;;
+		"Discharging") status="-" ;;
+		"Not charging") printf "Using From AC" && exit 0 ;;
+	esac
+
+	cat ${battery}/power_now | awk -v batt="${battery##*/}" -v sign=$status '{printf ("%s: %s%2.2f Watts", batt, sign, ($1 / 1000000))}'
+
+done && exit 0

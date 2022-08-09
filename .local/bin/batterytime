@@ -1,0 +1,22 @@
+#!/bin/bash
+
+voltage=$(cat /sys/class/power_supply/BAT0/voltage_now)
+power=$(cat /sys/class/power_supply/BAT0/power_now)
+capacity_now=$(cat /sys/class/power_supply/BAT0/energy_now)
+capacity_full=$(cat /sys/class/power_supply/BAT0/energy_full)
+status=$(cat /sys/class/power_supply/BAT0/status)
+
+
+if [[ "$status" == "Discharging" ]]; then
+	hour=$( bc <<< "scale=2; ($capacity_now * $voltage) / ($power * 10000000)" | awk '{printf "%.2f", $0}' )
+	minute=$( bc <<< "${hour#*.} * 60 / 100" )
+    notify-send "Estimated remaining battery time" "${hour%.*} hours $minute minutes"
+fi
+
+if [[ "$status" == "Charging" ]]; then
+	hour=$( bc <<< "scale=2; (($capacity_full - $capacity_now) * $voltage) / ($power * 10000000)" | awk '{printf "%.2f", $0}' )
+	minute=$( bc <<< "${hour#*.} * 60 / 100" )
+	notify-send "Estimated fully charging time" "${hour%.*} hours $minute minutes"
+fi
+
+exit 0
